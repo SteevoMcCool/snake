@@ -40,6 +40,12 @@ body {
     justify-content: center;
     align-content: center;
 }
+
+#snake div {
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: local;
+}
 #apple img {
     height: 80px;
 }

@@ -25,7 +25,8 @@ function loadBoard(){
 
 
 const snakeBackgroundImage= {
-    b1: "linear-gradient(#AA0000,#CC5555,#CC5555,#AA0000)"
+    head: "url('snakeHead.png')",
+    b1: "url('SnakeUpDown.png')"
 }
 loadBoard()
 let appleCoords = []
@@ -38,11 +39,10 @@ genApple(7,4)
 
 DOM.snake[0] = document.createElement("div")
 DOM.snake[0].style.position= "absolute"
-DOM.snake[0].style.backgroundImage = snakeBackgroundImage.b1
+DOM.snake[0].style.backgroundImage = snakeBackgroundImage.head
 DOM.SnFold.appendChild(DOM.snake[0])
 DOM.snake[0].style.transform = "rotate(-90deg)"
 DOM.snake[0].style.transition = "left 0.2s, top 0.2s"
-
 function snakePeiceMoveTo(p,x,y){
     let data = DOM.tiles[x][y].getBoundingClientRect()
     p.style.top =  `${data.top}px`
