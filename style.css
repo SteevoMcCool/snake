@@ -1,0 +1,41 @@
+body {
+    background-image: linear-gradient(#040404, #090909, #0e0e0e);
+}
+#topBar {
+    position: fixed;
+    top:0px;
+    left:0px;
+    margin: 0px 0px;
+    height: 50px;
+    width: 100vw;
+    background-color: #303030;
+}
+#mommy {
+    display: grid;
+    grid-template-columns: auto auto;
+    margin: auto auto;
+    grid-template-rows: 33% 67%;
+    position: fixed;
+    top:65px;
+    left:0px;
+    margin: 0px 0px;
+    height: calc(100% - 80px);
+    width: 99vw;
+}
+
+
+#board {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    display: grid;
+    grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+    grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+    border: 5px solid white;    
+    border-radius: 6px;
+
+}
+#board div {
+    border: 1px solid white;
+    border-right: none;
+    border-bottom: none;
+}
