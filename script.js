@@ -25,7 +25,7 @@ function loadBoard(){
 
 
 const snakeBackgroundImage= {
-    b1: "linear-gradient(#AA2222, #AA1010)"
+    b1: "linear-gradient(#AA0000,#CC5555,#CC5555,#AA0000)"
 }
 loadBoard()
 let appleCoords = []
@@ -44,7 +44,6 @@ DOM.snake[0].style.transform = "rotate(-90deg)"
 DOM.snake[0].style.transition = "left 0.2s, top 0.2s"
 
 function snakePeiceMoveTo(p,x,y){
-    console.log(x,y)
     let data = DOM.tiles[x][y].getBoundingClientRect()
     p.style.top =  `${data.top}px`
     p.style.left =  `${data.left}px`
@@ -94,10 +93,10 @@ document.addEventListener('keydown', (event) => {
 function moveSnake() {
     if (DOM.snake.length > 1) {
         for (let i = DOM.snake.length - 1; i > 0; i--) {
-            console.log(i)
             let SP = DOM.snake[i]
             let PIF = DOM.snake[i - 1]
             snakePeiceMoveTo(SP,PIF.style.getPropertyValue("--x"),PIF.style.getPropertyValue("--y"))
+            SP.style.transform = PIF.style.transform
         }
     }
 }
@@ -114,6 +113,17 @@ function newSnakePiece() {
     let PIF = DOM.snake[p-1]
     snakePeiceMoveTo(SP, PIF.style.getPropertyValue("--x"),PIF.style.getPropertyValue("--y"))
 }
+function findViableSquare() {
+     do {
+        let x = Math.floor(Math.random() * 10)
+        let y = Math.floor(Math.random() * 10)
+        let ar = DOM.snake.filter((part) => (part.style.getPropertyValue("--x")==x && part.style.getPropertyValue("--y")==y))
+        if (ar.length == 0) {
+            console.log(x,y)
+            return [x,y]
+        }
+    }while (true)
+}
 function check(){
     let head = DOM.snake[0]
     let hx = Number(head.style.getPropertyValue("--x"))
@@ -121,6 +131,8 @@ function check(){
     if (hx == appleCoords[0] && hy == appleCoords[1]) {
         score = score + 1
         newSnakePiece()
+        let pos = findViableSquare()
+        genApple(pos[0],pos[1])
     }
 }
 newSnakePiece()
