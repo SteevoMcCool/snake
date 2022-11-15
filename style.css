@@ -22,7 +22,13 @@ body {
     height: calc(100% - 80px);
     width: 99vw;
 }
-
+ #text {
+    border: 3px solid white;
+    margin: 0px 50px;
+    border-radius: 50px;
+    background-color: transparent;
+    box-shadow: 4px 4px 12px rgb(225,0,0),4px 4px 12px rgb(225,0,0),-4px -4px 12px rgb(0,0,225),-4px -4px 12px rgb(0,0,225), 1px 1px 3px rgb(235,0,0),-1px -1px 3px rgb(0,0,235), 4px -4px 12px rgb(235,0,235), -4px 4px 12px rgb(235,0,235);
+ }
 
 #board {
     grid-column: 2;
@@ -48,4 +54,11 @@ body {
 }
 #apple img {
     height: 80px;
+}
+p { 
+    color: white;
+    margin: 40px 50px;
+    margin-top: 20px;
+    font-size: 30px;
+    font-weight: bold;
 }

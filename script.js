@@ -5,9 +5,12 @@ const DOM = {
   SnFold: document.getElementById("snake"),
   snake: [],
   apple: document.getElementById("apple"),
+  text: document.getElementById("text"),
 };
 
 let score = 0;
+let highscore = 0;
+
 function loadBoard() {
   for (let x = 0; x < 10; x++) {
     for (let y = 0; y < 10; y++) {
@@ -44,7 +47,9 @@ DOM.snake[0].style.transform = "rotate(-90deg)";
 DOM.snake[0].style.transition = "left 0.2s, top 0.2s";
 DOM.snake[0].style.zIndex = "2";
 function snakePeiceMoveTo(p, x, y) {
-  if (!DOM.tiles[x][y]) {
+  if (!DOM.tiles[x]) {
+    return check(true);
+  } else if (!DOM.tiles[x][y]) {
     return check(true);
   }
   let data = DOM.tiles[x][y].getBoundingClientRect();
