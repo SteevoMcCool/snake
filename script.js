@@ -6,6 +6,8 @@ const DOM = {
   snake: [],
   apple: document.getElementById("apple"),
   text: document.getElementById("text"),
+  score: document.getElementById("score"),
+  hscore: document.getElementById("hscore"),
 };
 
 let score = 0;
@@ -157,14 +159,15 @@ function check(lose) {
     newSnakePiece();
     let pos = findViableSquare();
     genApple(pos[0], pos[1]);
+    DOM.score.innerHTML = `Score: ${score}`;
+    highscore = Math.max(score, highscore);
+    DOM.hscore.innerHTML = `High Score: ${highscore}`;
   }
   if (
     DOM.snake.filter(
       (val) =>
-        val.style.getPropertyValue("--x") ==
-          DOM.snake[0].style.getPropertyValue("--x") &&
-        val.style.getPropertyValue("--y") ==
-          DOM.snake[0].style.getPropertyValue("--y")
+        val.style.getPropertyValue("--x") == hx &&
+        val.style.getPropertyValue("--y") == hy
     ).length > 1 ||
     lose
   ) {
