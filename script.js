@@ -9,6 +9,7 @@ const DOM = {
   score: document.getElementById("score"),
   hscore: document.getElementById("hscore"),
 };
+let started = false;
 
 let score = 0;
 let highscore = 0;
@@ -39,15 +40,23 @@ function genApple(x, y) {
   appleCoords[0] = x;
   appleCoords[1] = y;
 }
-genApple(7, 4);
-
-DOM.snake[0] = document.createElement("div");
-DOM.snake[0].style.position = "absolute";
-DOM.snake[0].style.backgroundImage = snakeBackgroundImage.head;
-DOM.SnFold.appendChild(DOM.snake[0]);
-DOM.snake[0].style.transform = "rotate(-90deg)";
-DOM.snake[0].style.transition = "left 0.2s, top 0.2s";
-DOM.snake[0].style.zIndex = "2";
+function newGame() {
+  DOM.snake.forEach((thing) => {
+    thing.remove();
+  });
+  DOM.snake.length = 0;
+  genApple(7, 4);
+  DOM.snake[0] = document.createElement("div");
+  DOM.snake[0].style.position = "absolute";
+  DOM.snake[0].style.backgroundImage = snakeBackgroundImage.head;
+  DOM.SnFold.appendChild(DOM.snake[0]);
+  DOM.snake[0].style.transform = "rotate(-90deg)";
+  DOM.snake[0].style.transition = "left 0.2s, top 0.2s";
+  DOM.snake[0].style.zIndex = "2";
+  newSnakePiece();
+  newSnakePiece();
+  snakePeiceMoveTo(DOM.snake[0], 2, 4);
+}
 function snakePeiceMoveTo(p, x, y) {
   if (!DOM.tiles[x]) {
     return check(true);
@@ -69,9 +78,8 @@ function snakePeiceShift(p, x, y) {
     Number(p.style.getPropertyValue("--y")) + y
   );
 }
-snakePeiceMoveTo(DOM.snake[0], 2, 4);
 let direction;
-let MAIN = setInterval(() => {
+function interval() {
   moveSnake();
   if (direction == "r") {
     snakePeiceShift(DOM.snake[0], 1, 0);
@@ -90,17 +98,23 @@ let MAIN = setInterval(() => {
     check();
     DOM.snake[0].style.transform = "rotate(0deg)";
   }
-}, 200);
+}
+
+var MAIN = setInterval(interval, 200);
 
 document.addEventListener("keydown", (event) => {
   let key = event.key;
   if (key.toLowerCase() == "arrowright" && direction != "l") {
+    started = true;
     direction = "r";
   } else if (key.toLowerCase() == "arrowleft" && direction != "r") {
+    started = true;
     direction = "l";
   } else if (key.toLowerCase() == "arrowup" && direction != "d") {
+    started = true;
     direction = "u";
   } else if (key.toLowerCase() == "arrowdown" && direction != "u") {
+    started = true;
     direction = "d";
   }
 });
@@ -121,6 +135,7 @@ function moveSnake() {
 
 function newSnakePiece() {
   let p = DOM.snake.length;
+  console.log(p);
   DOM.snake[p] = document.createElement("div");
   DOM.snake[p].style.position = "absolute";
   DOM.snake[p].style.backgroundImage = snakeBackgroundImage.b1;
@@ -151,6 +166,9 @@ function findViableSquare() {
   } while (true);
 }
 function check(lose) {
+  if (!started) {
+    return {};
+  }
   let head = DOM.snake[0];
   let hx = Number(head.style.getPropertyValue("--x"));
   let hy = Number(head.style.getPropertyValue("--y"));
@@ -171,12 +189,12 @@ function check(lose) {
     ).length > 1 ||
     lose
   ) {
-    clearInterval(MAIN);
-    snake;
+    try {
+      clearInterval(MAIN);
+      snake;
+    } catch {}
   }
 }
-newSnakePiece();
-newSnakePiece();
 
 function setMommySize() {
   let h = window.innerHeight - 80;
