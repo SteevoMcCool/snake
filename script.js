@@ -8,12 +8,13 @@ const DOM = {
   text: document.getElementById("text"),
   score: document.getElementById("score"),
   hscore: document.getElementById("hscore"),
+  newGame: document.getElementById("newGame"),
 };
 let started = false;
-
+let MAIN;
 let score = 0;
 let highscore = 0;
-
+let loose = true;
 function loadBoard() {
   for (let x = 0; x < 10; x++) {
     for (let y = 0; y < 10; y++) {
@@ -54,7 +55,7 @@ function newGame() {
   DOM.snake[0].style.transition = "left 0.2s, top 0.2s";
   DOM.snake[0].style.zIndex = "2";
   newSnakePiece();
-  newSnakePiece();
+  snakePeiceMoveTo(DOM.snake[1], 1, 4);
   snakePeiceMoveTo(DOM.snake[0], 2, 4);
 }
 function snakePeiceMoveTo(p, x, y) {
@@ -99,23 +100,23 @@ function interval() {
     DOM.snake[0].style.transform = "rotate(0deg)";
   }
 }
-
-var MAIN = setInterval(interval, 200);
-
+function direct(d) {
+  if (!started && !loose) {
+    MAIN = setInterval(interval, 200);
+  }
+  started = true;
+  direction = d;
+}
 document.addEventListener("keydown", (event) => {
   let key = event.key;
   if (key.toLowerCase() == "arrowright" && direction != "l") {
-    started = true;
-    direction = "r";
+    direct("r");
   } else if (key.toLowerCase() == "arrowleft" && direction != "r") {
-    started = true;
-    direction = "l";
+    direct("l");
   } else if (key.toLowerCase() == "arrowup" && direction != "d") {
-    started = true;
-    direction = "u";
+    direct("u");
   } else if (key.toLowerCase() == "arrowdown" && direction != "u") {
-    started = true;
-    direction = "d";
+    direct("d");
   }
 });
 function moveSnake() {
@@ -190,22 +191,34 @@ function check(lose) {
     lose
   ) {
     try {
-      clearInterval(MAIN);
-      snake;
-    } catch {}
+      clearInterval(MAIN || setInterval(function () {}, 1000));
+      started = false;
+      loose = true;
+      console.log(`Started: ${started}`);
+    } catch {
+      console.log("HELP");
+    }
   }
 }
 
 function setMommySize() {
   let h = window.innerHeight - 80;
-  DOM.mommy.style.gridTemplateRows = `${h * (4 / 10)}px ${h * (6 / 10)}px`;
+  DOM.mommy.style.gridTemplateRows = `${h * (3.5 / 10)}px ${h * (6.5 / 10)}px`;
   let w = window.innerWidth * 0.99 - (window.innerHeight - 80);
   DOM.mommy.style.gridTemplateColumns = `${w}px ${h}px`;
-  if (!direction) {
+  if (!direction && DOM.snake[0]) {
     snakePeiceMoveTo(DOM.snake[0], 2, 4);
+    snakePeiceMoveTo(DOM.snake[1], 1, 4);
   }
   snakePeiceMoveTo(DOM.apple, appleCoords[0], appleCoords[1]);
 }
-
+DOM.newGame.addEventListener("click", function () {
+  if (!started) {
+    score = 0;
+    DOM.score.innerHTML = `Score: ${score}`;
+    loose = false;
+    newGame();
+  }
+});
 setMommySize();
 window.onresize = setMommySize;

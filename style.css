@@ -27,7 +27,15 @@ body {
     margin: 0px 50px;
     border-radius: 50px;
     background-color: transparent;
-    box-shadow: 4px 4px 12px rgb(225,0,0),4px 4px 12px rgb(225,0,0),-4px -4px 12px rgb(0,0,225),-4px -4px 12px rgb(0,0,225), 1px 1px 3px rgb(235,0,0),-1px -1px 3px rgb(0,0,235), 4px -4px 12px rgb(235,0,235), -4px 4px 12px rgb(235,0,235);
+    box-shadow: 4px 4px 12px rgb(225,0,0),4px 4px 12px rgb(225,0,0),-4px -4px 12px rgb(0,0,225),-4px -4px 12px rgb(0,0,225), 1px 1px 3px rgb(235,0,0),-1px -1px 3px rgb(0,0,235);
+ }
+ #custom {
+    border: 3px solid white;
+    margin: 0px 50px;
+    margin-top: 50px;
+    border-radius: 50px;
+    background-color: transparent;
+    box-shadow: 4px 4px 12px rgb(225,0,0),4px 4px 12px rgb(225,0,0),-4px -4px 12px rgb(0,0,225),-4px -4px 12px rgb(0,0,225), 1px 1px 3px rgb(235,0,0),-1px -1px 3px rgb(0,0,235);
  }
 
 #board {
@@ -38,8 +46,15 @@ body {
     grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
     border: 5px solid white;    
     border-radius: 6px;
+    box-shadow: 4px 4px 12px rgb(225,0,0),4px 4px 12px rgb(225,0,0),-4px -4px 12px rgb(0,0,225),-4px -4px 12px rgb(0,0,225), 1px 1px 3px rgb(235,0,0),-1px -1px 3px rgb(0,0,235);
 }
-
+#board, #custom, #text {
+    transition: box-shadow 0.35s;
+}
+#board:hover, #custom:hover, #text:hover {
+    box-shadow: 14px 14px 2px rgb(225,0,0),14px 14px 2px rgb(225,0,0),-14px -14px 2px rgb(0,0,225),-14px -14px 2px rgb(0,0,225), 11px 11px 1px rgb(235,0,0),-11px -11px 1px rgb(0,0,235);
+ 
+}
 #apple {
     position: absolute;
     display: flex;
@@ -62,3 +77,13 @@ p {
     font-size: 30px;
     font-weight: bold;
 }
+ #newGame {
+    color:black;
+    background-color: white;
+    padding: 6px;
+    border-radius: 6px;
+    width: 90%;
+    margin: auto 5%;
+    font-size: 40px;
+    font-weight: 900;
+ }
