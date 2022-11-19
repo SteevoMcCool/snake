@@ -27,16 +27,60 @@ body {
     margin: 0px 50px;
     border-radius: 50px;
     background-color: transparent;
-    box-shadow: 4px 4px 12px rgb(225,0,0),4px 4px 12px rgb(225,0,0),-4px -4px 12px rgb(0,0,225),-4px -4px 12px rgb(0,0,225), 1px 1px 3px rgb(235,0,0),-1px -1px 3px rgb(0,0,235);
  }
  #custom {
     border: 3px solid white;
     margin: 0px 50px;
     margin-top: 50px;
     border-radius: 50px;
+    display: grid;
+    grid-template-rows: 20% 80%;
+    grid-template-columns: 33% 33% 33%;
     background-color: transparent;
-    box-shadow: 4px 4px 12px rgb(225,0,0),4px 4px 12px rgb(225,0,0),-4px -4px 12px rgb(0,0,225),-4px -4px 12px rgb(0,0,225), 1px 1px 3px rgb(235,0,0),-1px -1px 3px rgb(0,0,235);
+    text-align: center;
+
  }
+ #custom h4 {
+    grid-column: 1/4;
+    font-size: 50px;
+    color: white;
+    padding: 0px;
+    margin: 0px;
+ }
+ #custom p {
+    margin: 0px;
+    font-size: 30px;
+    color: white;
+    background-color: #FFF2;
+    display: flex;
+    flex-direction: column;
+    border-radius: 25px;
+ }
+ .customButton {
+    padding: 0px;
+    margin: 0px;
+    background-color: #FFF2;
+    color: white;
+    font-size: 30px;
+    border-radius: 25px;
+    transition: all 0.25s;
+    height: 15%;
+    margin: 7px;
+ }
+ #redP1, #redP2 {
+    color: rgb(170, 0, 0);
+ }
+ #greenP1,  #greenP2 {
+    color: rgb(0, 170, 0);
+ }
+ #blueP1, #blueP2 {
+    color: rgb(0, 0, 170);
+ }
+.customButton:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 4px black;
+}
+
 
 #board {
     grid-column: 2;
@@ -46,14 +90,13 @@ body {
     grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
     border: 5px solid white;    
     border-radius: 6px;
-    box-shadow: 4px 4px 12px rgb(225,0,0),4px 4px 12px rgb(225,0,0),-4px -4px 12px rgb(0,0,225),-4px -4px 12px rgb(0,0,225), 1px 1px 3px rgb(235,0,0),-1px -1px 3px rgb(0,0,235);
 }
 #board, #custom, #text {
     transition: box-shadow 0.35s;
+    box-shadow: 4px 4px 12px rgb(225,0,0),4px 4px 12px rgb(225,0,0),-4px -4px 12px rgb(0,0,225),-4px -4px 12px rgb(0,0,225), 1px 1px 3px rgb(235,0,0),-1px -1px 3px rgb(0,0,235);
 }
 #board:hover, #custom:hover, #text:hover {
-    box-shadow: 14px 14px 2px rgb(225,0,0),14px 14px 2px rgb(225,0,0),-14px -14px 2px rgb(0,0,225),-14px -14px 2px rgb(0,0,225), 11px 11px 1px rgb(235,0,0),-11px -11px 1px rgb(0,0,235);
- 
+    box-shadow: 8px 8px 12px rgb(225,0,0),8px 8px 12px rgb(225,0,0),-8px -8px 12px rgb(0,0,225),-8px -8px 12px rgb(0,0,225), 3px 3px 3px rgb(235,0,0),-3px -3px 13px rgb(0,0,235), -5px 5px 8px rgb(185,0,185),5px -5px 8px rgb(185,0,185);
 }
 #apple {
     position: absolute;
@@ -61,29 +104,43 @@ body {
     justify-content: center;
     align-content: center;
 }
+#snake {
+    filter: hue-rotate(0deg);
+    vertical-align: top
 
-#snake div {
+}
+#snakeP2 {
+    filter: hue-rotate(240deg);
+    vertical-align: top
+}
+#snake div, #snakeP2 div {
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-size:cover;
     background-attachment: local;
+    background-position: top left;
+    margin: 0px 0px;
+    padding: 0px 0px;
 }
 #apple img {
     height: 80px;
 }
 p { 
     color: white;
-    margin: 40px 50px;
-    margin-top: 20px;
-    font-size: 30px;
+    margin: 20px 50px;
+    margin-top: 10px;
+    font-size: 25px;
     font-weight: bold;
 }
- #newGame {
+ #newGame, #newGameP2 {
     color:black;
     background-color: white;
-    padding: 6px;
-    border-radius: 6px;
+    padding: 4px;
+    border-radius: 4px;
     width: 90%;
     margin: auto 5%;
-    font-size: 40px;
+    font-size: 25px;
     font-weight: 900;
  }
+#obstacles div {
+    position: absolute;
+}
