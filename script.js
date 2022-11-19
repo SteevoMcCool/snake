@@ -28,11 +28,14 @@ const DOM = {
 };
 let difficulty = "medium"
 let started = false;
+let directionP2 =""
 let MAIN;
 let score = 0;
+let scoreP2 = 0
 let highscore = 0;
 let hardhighscore = 0;
 let loose = true;
+let looseP2 = true;
 function loadBoard() {
   for (let x = 0; x < 10; x++) {
     for (let y = 0; y < 10; y++) {
@@ -49,6 +52,7 @@ function loadBoard() {
   return true
 }
 
+let gamemode = "P1"
 DOM.redP1.addEventListener("click", function(){
   DOM.SnFold.style.filter = "hue-rotate(0deg)"
   DOM.redP1.style.border = "2px solid gold"
@@ -174,6 +178,18 @@ function newGameP2() {
   newSnakePiece();
   snakePeiceMoveTo(DOM.snake[1], 1, 4);
   snakePeiceMoveTo(DOM.snake[0], 2, 4);
+
+  DOM.snakeP2[0] = document.createElement("div");
+  DOM.snakeP2[0].style.position = "absolute";
+  DOM.snakeP2[0].style.backgroundImage = snakeBackgroundImage.head;
+  DOM.SnFoldP2.appendChild(DOM.snakeP2[0]);
+  DOM.snakeP2[0].style.transform = "rotate(90deg)";
+  DOM.snakeP2[0].style.transition = "left 0.2s, top 0.2s";
+  DOM.snakeP2[0].style.zIndex = "2";
+  newSnakePiece(DOM.snakeP2);
+  snakePeiceMoveTo(DOM.snakeP2[1], 8, 7);
+  snakePeiceMoveTo(DOM.snakeP2[0], 7, 7);
+  gamemode="P2"
   return true
 }
 function snakePeiceMoveTo(p, x, y) {
@@ -220,15 +236,39 @@ function interval() {
     check();
     DOM.snake[0].style.transform = "rotate(0deg)";
   }
+  if (gamemode=="P2") {
+    moveSnakeP2();
+    if (directionP2 == "r") {
+      snakePeiceShift(DOM.snakeP2[0], 1, 0);
+      check();
+      DOM.snakeP2[0].style.transform = "rotate(-90deg)";
+    } else if (directionP2 == "l") {
+      snakePeiceShift(DOM.snakeP2[0], -1, 0);
+      check();
+      DOM.snakeP2[0].style.transform = "rotate(90deg)";
+    } else if (directionP2 == "u") {
+      snakePeiceShift(DOM.snakeP2[0], 0, -1);
+      check();
+      DOM.snakeP2[0].style.transform = "rotate(180deg)";
+    } else if (directionP2 == "d") {
+      snakePeiceShift(DOM.snakeP2[0], 0, 1);
+      check();
+      DOM.snakeP2[0].style.transform = "rotate(0deg)";
+    }    
+  }
   return true
 }
-function direct(d) {
+function direct(d,sn) {
   if (!started && !loose) {
     MAIN = setInterval(interval, 200);
   }
   if (!loose){
     started = true;
-    direction = d;
+    if (sn==2) {
+      directionP2 = d
+    }else {
+      direction = d;
+    }
   }
   return true
 }
@@ -242,6 +282,14 @@ document.addEventListener("keydown", (event) => {
     direct("u");
   } else if (key.toLowerCase() == "arrowdown" && direction != "u") {
     direct("d");
+  } else if (key.toLowerCase() == "d" && direction != "l") {
+    direct("r",2);
+  } else if (key.toLowerCase() == "a" && direction != "r") {
+    direct("l",2);
+  } else if (key.toLowerCase() == "s" && direction != "d") {
+    direct("u",2);
+  } else if (key.toLowerCase() == "w" && direction != "u") {
+    direct("d",2);
   }
   return true
 });
@@ -260,16 +308,34 @@ function moveSnake() {
   }
   return true
 }
+function moveSnakeP2() {
+  if (DOM.snakeP2.length > 1) {
+    for (let i = DOM.snakeP2.length - 1; i > 0; i--) {
+      let SP = DOM.snakeP2[i];
+      let PIF = DOM.snakeP2[i - 1];
+      snakePeiceMoveTo(
+        SP,
+        PIF.style.getPropertyValue("--x"),
+        PIF.style.getPropertyValue("--y")
+      );
+      SP.style.transform = PIF.style.transform;
+    }
+  }
+  return true
+}
 
-function newSnakePiece() {
-  let p = DOM.snake.length;
+function newSnakePiece(snake) {
+  snake = snake || DOM.snake
+  let p = snake.length;
   console.log(p);
-  DOM.snake[p] = document.createElement("div");
-  DOM.snake[p].style.position = "absolute";
-  DOM.snake[p].style.backgroundImage = snakeBackgroundImage.b1;
-  DOM.SnFold.appendChild(DOM.snake[p]);
-  DOM.snake[p].style.transform = "rotate(-90deg)";
-  DOM.snake[p].style.transition = "left 0.2s, top 0.2s";
+  snake[p] = document.createElement("div");
+  snake[p].style.position = "absolute";
+  snake[p].style.backgroundImage = snakeBackgroundImage.b1;
+  if (snake == DOM.snake) {
+  DOM.SnFold.appendChild(snake[p]);
+  }else{DOM.SnFoldP2.appendChild(snake[p])}
+  snake[p].style.transform = "rotate(-90deg)";
+  snake[p].style.transition = "left 0.2s, top 0.2s";
   let SP = DOM.snake[p];
   let PIF = DOM.snake[p - 1];
   snakePeiceMoveTo(
@@ -367,7 +433,6 @@ function check(lose) {
   }
   return true
 }
-
 function setMommySize() {
   let h = window.innerHeight - 80;
   DOM.mommy.style.gridTemplateRows = `${h * (3.5 / 10)}px ${h * (6.5 / 10)}px`;
