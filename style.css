@@ -98,7 +98,7 @@ body {
 #board:hover, #custom:hover, #text:hover {
     box-shadow: 8px 8px 12px rgb(225,0,0),8px 8px 12px rgb(225,0,0),-8px -8px 12px rgb(0,0,225),-8px -8px 12px rgb(0,0,225), 3px 3px 3px rgb(235,0,0),-3px -3px 13px rgb(0,0,235), -5px 5px 8px rgb(185,0,185),5px -5px 8px rgb(185,0,185);
 }
-#apple {
+#apple, #apple2 {
     position: absolute;
     display: flex;
     justify-content: center;
@@ -121,7 +121,7 @@ body {
     margin: 0px 0px;
     padding: 0px 0px;
 }
-#apple img {
+#apple, #apple2 img {
     height: 80px;
 }
 p { 
